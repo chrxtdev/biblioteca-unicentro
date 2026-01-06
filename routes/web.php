@@ -11,7 +11,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     $books = Book::where('is_verified', true)->get();
-    return view('dashboard', ['books' => $books]);
+    $myBooks = Book::where('user_id', auth()->id())->get();
+    return view('dashboard', ['books' => $books, 'myBooks' => $myBooks]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

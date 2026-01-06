@@ -16,6 +16,45 @@
                 </div>
             @endif
 
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
+                <div class="p-6 text-gray-900">
+                    <h3 class="text-lg font-bold mb-4 border-b pb-2">📂 Meus Envios Recentes</h3>
+
+                    @if($myBooks->isEmpty())
+                        <p class="text-gray-500 italic">Você ainda não enviou nenhum livro.</p>
+                    @else
+                        <table class="w-full text-left">
+                            <thead>
+                            <tr class="text-gray-500 text-sm">
+                                <th class="pb-2">Título</th>
+                                <th class="pb-2">Status</th>
+                                <th class="pb-2">Data</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($myBooks as $myBook)
+                                <tr class="border-b">
+                                    <td class="py-2">{{ $myBook->title }}</td>
+                                    <td class="py-2">
+                                        @if($myBook->is_verified)
+                                            <span
+                                                class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">Aprovado</span>
+                                        @else
+                                            <span
+                                                class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded">Em Análise</span>
+                                        @endif
+                                    </td>
+                                    <td class="py-2 text-sm text-gray-500">
+                                        {{ $myBook->created_at->format('d/m/Y') }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                </div>
+            </div>
+
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="text-lg font-bold mb-4">Livros Disponíveis na Biblioteca</h3>
