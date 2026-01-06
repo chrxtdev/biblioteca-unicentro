@@ -61,6 +61,16 @@
             <input type="file" name="cover_path" accept="image/*" class="w-full p-2 border border-gray-300 rounded">
         </div>
 
+        <div>
+            <label class="block text-gray-700 font-bold mb-2">Curso Relacionado</label>
+            <select name="course" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 bg-white" required>
+                <option value="" disabled selected>Selecione um curso...</option>
+                @foreach(\App\Models\Book::COURSES as $value => $label)
+                    <option value="{{ $value }}">{{ $label }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <button type="submit"
                 class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition">
             Enviar para Análise

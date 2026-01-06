@@ -54,6 +54,12 @@ class BookResource extends Resource
                 Forms\Components\Toggle::make('is_verified')
                     ->label('Verificado pela Faculdade?')
                     ->default(false),
+
+                Forms\Components\Select::make('course')
+                    ->label('Curso Relacionado')
+                    ->options(\App\Models\Book::COURSES)
+                    ->searchable()
+                    ->required(),
             ]);
     }
 
@@ -63,6 +69,8 @@ class BookResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('cover_path')
                     ->circular(),
+
+                Tables\Columns\TextColumn::make('title')->label('Título'),
 
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
@@ -75,7 +83,7 @@ class BookResource extends Resource
                     ->label('Enviado por'),
 
                 Tables\Columns\ToggleColumn::make('is_verified')
-                    ->label('Verificado?')
+                    ->label('Aprovado?')
                     ->onColor('success')
                     ->offColor('danger'),
 
