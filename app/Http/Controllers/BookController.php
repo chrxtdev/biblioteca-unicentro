@@ -57,14 +57,12 @@ class BookController extends Controller
             'author' => $request->author,
             'description' => $request->description,
             'course' => $request->course,
-
             'file_path' => $path,
             'cover_path' => $capaPath,
-
             'user_id' => auth()->id(),
             'is_verified' => false,
         ]);
 
-        return redirect()->route('books.index')->with('success', 'Livro enviado!');
+        return to_route('dashboard')->with('status', 'livro-enviado');
     }
 }

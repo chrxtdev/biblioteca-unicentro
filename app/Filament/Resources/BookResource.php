@@ -70,9 +70,8 @@ class BookResource extends Resource
                 Tables\Columns\ImageColumn::make('cover_path')
                     ->circular(),
 
-                Tables\Columns\TextColumn::make('title')->label('Título'),
-
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Título')
                     ->searchable()
                     ->sortable(),
 
