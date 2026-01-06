@@ -42,7 +42,7 @@ class BookController extends Controller
             $capaPath = $request->file('cover_path')->store('livros_capas', 'public');
         }
 
-        Book::create([
+        $book = Book::create([
             'title' => $request->title,
             'author' => $request->author,
             'description' => $request->description,
@@ -52,6 +52,13 @@ class BookController extends Controller
             'user_id' => auth()->id(),
             'is_verified' => false,
         ]);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'message' => 'Livro enviado com sucesso!',
+                'book' => $book,
+            ], 201);
+        }
 
         return to_route('dashboard')->with('status', 'livro-enviado');
     }
