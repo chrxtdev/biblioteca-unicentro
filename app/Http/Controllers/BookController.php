@@ -10,11 +10,9 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::where('is_verified', true)
+        return Book::where('is_verified', true)
             ->orderBy('created_at', 'desc')
             ->get();
-
-        return $books;
     }
 
     public function create()
@@ -44,15 +42,7 @@ class BookController extends Controller
             $capaPath = $request->file('cover_path')->store('livros_capas', 'public');
         }
 
-
-        $caminhoPdf = $request->file('file_path')->store('livros_pdfs', 'public');
-
-        $caminhoCapa = null;
-        if ($request->hasFile('cover_path')) {
-            $caminhoCapa = $request->file('cover_path')->store('livros_capas', 'public');
-        }
-
-        $book = Book::create([
+        Book::create([
             'title' => $request->title,
             'author' => $request->author,
             'description' => $request->description,

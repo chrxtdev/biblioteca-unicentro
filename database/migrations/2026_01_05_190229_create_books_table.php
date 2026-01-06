@@ -15,14 +15,10 @@ return new class extends Migration {
             $table->string('title');
             $table->string('author');
             $table->text('description')->nullable();
-
             $table->string('file_path');
             $table->string('cover_path')->nullable();
-
             $table->boolean('is_verified')->default(false);
-
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-
             $table->timestamps();
         });
     }

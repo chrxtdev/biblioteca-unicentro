@@ -10,8 +10,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+
     $books = Book::where('is_verified', true)->get();
+
     $myBooks = Book::where('user_id', auth()->id())->get();
+
     return view('dashboard', ['books' => $books, 'myBooks' => $myBooks]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -23,17 +26,9 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-
 Route::get('/livros', [BookController::class, 'index'])->name('books.index');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/enviar-livro', [BookController::class, 'create'])->name('books.create');
     Route::post('/livros', [BookController::class, 'store'])->name('books.store');
 });
-
-
-Route::get('/dashboard', function () {
-    $books = Book::where('is_verified', true)->get();
-
-    return view('dashboard', ['books' => $books]);
-})->middleware(['auth', 'verified'])->name('dashboard');

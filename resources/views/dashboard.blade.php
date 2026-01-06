@@ -57,7 +57,7 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h3 class="text-lg font-bold mb-4">Livros Disponíveis na Biblioteca</h3>
+                    <h3 class="text-lg font-bold mb-4">📚 Livros Disponíveis na Biblioteca</h3>
 
                     @if($books->isEmpty())
                         <p>Nenhum livro disponível no momento.</p>
