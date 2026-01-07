@@ -10,9 +10,24 @@ class BookController extends Controller
 {
     public function index()
     {
-        return Book::where('is_verified', true)
+        $books = Book::where('is_verified', true)
             ->orderBy('created_at', 'desc')
             ->get();
+
+        $books->transform(function ($book) {
+            return [
+                'id' => $book->id,
+                'title' => $book->title,
+                'author' => $book->author,
+                'description' => $book->description,
+                'course' => $book->course,
+                'created_at' => $book->created_at,
+                'file_url' => asset('storage/' . $book->file_path),
+                'cover_url' => $book->cover_path ? asset('storage/' . $book->cover_path) : null,
+            ];
+        });
+
+        return response()->json($books);
     }
 
     public function create()
@@ -61,5 +76,30 @@ class BookController extends Controller
         }
 
         return to_route('dashboard')->with('status', 'livro-enviado');
+    }
+
+    public function myBooks(Request $request)
+    {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json(['message' => 'Não autenticado'], 401);
+        }
+
+        $books = Book::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $books->transform(function ($book) {
+            return [
+                'id' => $book->id,
+                'title' => $book->title,
+                'status' => $book->is_verified ? 'Aprovado' : 'Em Análise',
+                'created_at' => $book->created_at,
+                'file_url' => asset('storage/' . $book->file_path),
+            ];
+        });
+
+        return response()->json($books);
     }
 }
