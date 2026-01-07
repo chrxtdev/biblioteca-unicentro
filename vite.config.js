@@ -8,4 +8,14 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    // server: {
+    //     allowedHosts: [
+    //         'proscience-unimposingly-nieves.ngrok-free.dev',
+    //         '.ngrok-free.dev'
+    //     ],
+    //     host: '0.0.0.0',
+    //     hmr: {
+    //         host: 'proscience-unimposingly-nieves.ngrok-free.dev',
+    //     },
+    // },
 });
