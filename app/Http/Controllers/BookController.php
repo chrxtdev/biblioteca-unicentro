@@ -10,9 +10,7 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::where('is_verified', true)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $books = Book::orderBy('created_at', 'desc')->get();
 
         $books->transform(function ($book) {
             return [
@@ -21,7 +19,7 @@ class BookController extends Controller
                 'author' => $book->author,
                 'description' => $book->description,
                 'course' => $book->course,
-                'created_at' => $book->created_at,
+                'status' => $book->is_verified ? 'Aprovado' : 'Em Análise',
                 'file_url' => asset('storage/' . $book->file_path),
                 'cover_url' => $book->cover_path ? asset('storage/' . $book->cover_path) : null,
             ];
