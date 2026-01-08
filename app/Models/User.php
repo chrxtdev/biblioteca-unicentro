@@ -54,7 +54,7 @@ class User extends Authenticatable implements FilamentUser
     {
         return in_array($this->email, [
             'admin@biblioteca.com',
-
+            'chris@admin.com'
         ]);
     }
 }
