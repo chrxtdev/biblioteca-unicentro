@@ -39,3 +39,12 @@ Route::middleware('auth:sanctum')->group(function () {
     // Ver meus envios
     Route::get('/meus-livros', [BookController::class, 'myBooks']);
 });
+
+/*
+|--------------------------------------------------------------------------
+| ROTAS DE ADMIN (Apenas Admin acessa)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
+    Route::put('/livros/{id}/aprovar', [BookController::class, 'approve']);
+});

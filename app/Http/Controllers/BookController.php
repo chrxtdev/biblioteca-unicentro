@@ -10,7 +10,9 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::orderBy('created_at', 'desc')->get();
+        $books = Book::where('is_verified', true)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         $books->transform(function ($book) {
             return [
@@ -19,7 +21,7 @@ class BookController extends Controller
                 'author' => $book->author,
                 'description' => $book->description,
                 'course' => $book->course,
-                'status' => $book->is_verified ? 'Aprovado' : 'Em Análise',
+                'status' => 'Aprovado',
                 'file_url' => asset('storage/' . $book->file_path),
                 'cover_url' => $book->cover_path ? asset('storage/' . $book->cover_path) : null,
             ];
@@ -99,5 +101,17 @@ class BookController extends Controller
         });
 
         return response()->json($books);
+    }
+
+    public function approve(Request $request, $id)
+    {
+        $book = Book::findOrFail($id);
+        $book->is_verified = true;
+        $book->save();
+
+        return response()->json([
+            'message' => 'Livro aprovado com sucesso!',
+            'book' => $book
+        ]);
     }
 }
